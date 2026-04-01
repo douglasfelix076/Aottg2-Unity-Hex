@@ -198,6 +198,7 @@
 		"Top.SkinsButton": "Skins",
 		"Top.GameButton": "Juego",
 		"Top.AbilityButton": "Habilidad",
+		"Top.VRButton": "VR",
 		"KeybindPopup.Title": "Ingresa tecla nueva",
 		"KeybindPopup.Unbind": "Desvincular",
 		"KeybindPopup.CurrentKey": "Tecla actual",
@@ -474,6 +475,8 @@
 		"Ability.BombRange": "Rango de bomba",
 		"Ability.BombSpeed": "Velocidad de bomba",
 		"Ability.BombCooldown": "Enfriamiento de bomba",
+		"VR.Height": "Height",
+		"VR.SeatedMode": "Seated Mode",
 		"Ability.SwapAttackSpecial": "Intercambiar ataque/especial",
 		"Ability.SwapAttackSpecialTooltip": "Cambia las teclas de ataque/especial en pvp de Lanza Relámpago."
 	},

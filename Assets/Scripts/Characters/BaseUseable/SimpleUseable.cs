@@ -12,10 +12,10 @@ namespace Characters
         {
         }
 
-        public override void ReadInput(KeybindSetting keybind)
-        {
-            SetInput(keybind.GetKeyDown());
-        }
+        // public override void ReadInput(KeybindSetting keybind)
+        // {
+        //     SetInput(keybind.GetKeyDown());
+        // }
 
         public override void SetInput(bool key)
         {

@@ -198,6 +198,7 @@
 		"Top.SkinsButton": "Görünümler",
 		"Top.GameButton": "Oyun",
 		"Top.AbilityButton": "Yetenekler",
+		"Top.VRButton": "VR",
 		"KeybindPopup.Title": "Yeni tuş atayın",
 		"KeybindPopup.Unbind": "Tuş atamasını kaldır",
 		"KeybindPopup.CurrentKey": "Seçili tuş",
@@ -474,6 +475,8 @@
 		"Ability.BombRange": "Bomba menzili",
 		"Ability.BombSpeed": "Bomba hızı",
 		"Ability.BombCooldown": "Yeniden bomba ateşleme süresi",
+		"VR.Height": "Height",
+		"VR.SeatedMode": "Seated Mode",
 		"Ability.SwapAttackSpecial": "saldırı ve özel yeteneği değiştir",
 		"Ability.SwapAttackSpecialTooltip": "Yıldırım Mızrağı ile PVP sırasında saldırı ve özel yetenek tuşlarını değiştirir."
 	},

@@ -198,6 +198,7 @@
 		"Top.SkinsButton": "Skins",
 		"Top.GameButton": "Spel",
 		"Top.AbilityButton": "Vaardigheid",
+		"Top.VRButton": "VR",
 		"KeybindPopup.Title": "Voer nieuwe toetscombinatie in",
 		"KeybindPopup.Unbind": "Ontkoppelen",
 		"KeybindPopup.CurrentKey": "Huidige toets",
@@ -474,6 +475,8 @@
 		"Ability.BombRange": "Bom bereik",
 		"Ability.BombSpeed": "Bom snelheid",
 		"Ability.BombCooldown": "Bom wachttijd",
+		"VR.Height": "Height",
+		"VR.SeatedMode": "Seated Mode",
 		"Ability.SwapAttackSpecial": "Wissel aanval/special",
 		"Ability.SwapAttackSpecialTooltip": "Wissel aanval- en specialtoetsen tijdens thunderspear PVP."
 	},

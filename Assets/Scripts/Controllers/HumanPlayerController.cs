@@ -6,6 +6,7 @@ using UI;
 using System.Collections.Generic;
 using Utility;
 using Photon.Pun;
+using GameManagers;
 
 namespace Controllers
 {
@@ -58,8 +59,7 @@ namespace Controllers
         {
             if (inMenu || _human.Dead || _human.State == HumanState.Stun)
             {
-                if (!_autorun)
-                    _human.HasDirection = false;
+                _human.HasDirection = false;
                 return;
             }
             _human.IsWalk = _humanInput.HorseWalk.GetKey();
@@ -71,31 +71,15 @@ namespace Controllers
                     _human.Animation.IsPlaying("dash") || _human.Animation.IsPlaying("jump") || _human.IsFiringThunderspear()))
                     return;
             }
-            int forward = 0;
-            int right = 0;
-            if (_generalInput.Autorun.GetKeyDown())
-                _autorun = !_autorun;
-            if (_generalInput.Forward.GetKey())
-                forward = 1;
-            else if (_generalInput.Back.GetKey())
-                forward = -1;
-            if (_generalInput.Left.GetKey())
-                right = -1;
-            else if (_generalInput.Right.GetKey())
-                right = 1;
-            if (forward != 0 || right != 0)
-                _autorun = false;
-            if (_autorun)
+            Vector2 movement = VRGeneralInput.GetMovementJoystick();
+            float forward = movement.y;
+            float right = movement.x;
+
+            float magnitude = movement.magnitude;
+            if (magnitude > 0.1f)
             {
-                forward = 1;
-                right = 0;
-            }
-            if (forward != 0 || right != 0)
-            {
-                _character.TargetAngle = GetTargetAngle(forward, right);
                 _character.HasDirection = true;
-                Vector3 v = new Vector3(right, 0f, forward);
-                float magnitude = (v.magnitude <= 0.95f) ? ((v.magnitude >= 0.25f) ? v.magnitude : 0f) : 1f;
+                _character.TargetAngle = GetTargetAngle(forward, right);
                 _human.TargetMagnitude = magnitude;
             }
             else
@@ -204,8 +188,8 @@ namespace Controllers
             bool canHook = _human.State != HumanState.Grab && _human.State != HumanState.Stun && _human.Stats.CurrentGas > 0f
                 && !(_human.MountState == HumanMountState.MapObject && !_human.CanMountedAttack) && !_human.Dead;
             bool hookBoth = _humanInput.HookBoth.GetKey();
-            bool hookLeft = _humanInput.HookLeft.GetKey();
-            bool hookRight = _humanInput.HookRight.GetKey();
+            bool hookLeft = VRHumanInput.HookLeft.GetKey();
+            bool hookRight = VRHumanInput.HookRight.GetKey();
             bool hasHook = _human.HookLeft.HasHook() || _human.HookRight.HasHook();
             if (_human.CancelHookBothKey)
             {
@@ -235,7 +219,7 @@ namespace Controllers
 
             if (_human.Stats.CurrentGas <= 0f && (hookLeft || hookRight || hookBoth))
             {
-                if (_humanInput.HookLeft.GetKeyDown() || _humanInput.HookRight.GetKeyDown() || _humanInput.HookBoth.GetKeyDown())
+                if (VRHumanInput.HookLeft.GetKeyDown() || VRHumanInput.HookRight.GetKeyDown())
                     _human.PlaySoundRPC(HumanSounds.NoGas, Util.CreateLocalPhotonInfo());
             }
         }
@@ -264,20 +248,33 @@ namespace Controllers
             UpdateReelInput(inMenu);
             UpdateDashInput(inMenu);
             bool canWeapon =  _human.IsAttackableState && !_illegalWeaponStates.Contains(_human.State) && !inMenu && !_human.Dead;
-            var attackInput = _humanInput.AttackDefault;
-            var specialInput = _humanInput.AttackSpecial;
-            if (_human.Weapon is ThunderspearWeapon && SettingsManager.InputSettings.Human.SwapTSAttackSpecial.Value)
+            var attackInputLeft = VRHumanInput.AttackDirectionalLeft;
+            var attackInputRight = VRHumanInput.AttackDirectionalRight;
+            var specialInput = VRHumanInput.AttackSpecial;
+            bool AttackLeft = false;
+            bool AttackRight = false;
+
+            if (_human.Weapon is BladeWeapon)
             {
-                attackInput = _humanInput.AttackSpecial;
-                specialInput = _humanInput.AttackDefault;
+                AttackLeft  = VRInput.GetVelocity(VRController.Left ).magnitude > 0.8f && VRInput.GetAngularVelocity(VRController.Left ).magnitude > 0.4;
+                AttackRight = VRInput.GetVelocity(VRController.Right).magnitude > 0.8f && VRInput.GetAngularVelocity(VRController.Right).magnitude > 0.4;
             }
-            _human._gunArmAim = false;
+            else // gun weapon
+            {
+
+            }
+            // if (_human.Weapon is ThunderspearWeapon && SettingsManager.InputSettings.Human.SwapTSAttackSpecial.Value)
+            // {
+            //     attackInput = VRHumanInput.AttackSpecial;
+            //     specialInput = VRHumanInput.AttackDirectionalRight;
+            // }
+            // _human._gunArmAim = false;
             if (canWeapon)
             {
                 if (_human.Weapon is AmmoWeapon && ((AmmoWeapon)_human.Weapon).RoundLeft == 0 &&
                     !(_human.Weapon is ThunderspearWeapon && ((ThunderspearWeapon)_human.Weapon).HasActiveProjectile()))
                 {
-                    if (attackInput.GetKeyDown() && _human.State == HumanState.Idle)
+                    if ((attackInputLeft.GetKeyDown() || attackInputRight.GetKeyDown()) && _human.State == HumanState.Idle)
                         _human.Reload();
                 }
                 else
@@ -288,22 +285,25 @@ namespace Controllers
                         _human.Weapon.SetInput(false);
                         return;
                     }
-                    if (_human.Weapon is AHSSWeapon)
+                    if (_human.Weapon is BladeWeapon)
                     {
-                        bool isClick = attackInput.Contains(KeyCode.Mouse0);
-                        if (isClick && _inGameMenu.SkipAHSSInput)
-                            _inGameMenu.SkipAHSSInput = false;
-                        else if (attackInput.GetKeyUp())
-                        {
-                            _human.Weapon.SetInput(true);
-                            _inGameMenu.SkipAHSSInput = false;
-                        }
-                        else
-                            _human.Weapon.SetInput(false);
-                        _human._gunArmAim = attackInput.GetKey() || _human.Weapon.IsActive;
+
                     }
-                    else
-                        _human.Weapon.ReadInput(attackInput);
+                    else if (_human.Weapon is AHSSWeapon)
+                    {
+                        // bool isClick = attackInput.Contains(KeyCode.Mouse0);
+                        // if (isClick && _inGameMenu.SkipAHSSInput)
+                        //     _inGameMenu.SkipAHSSInput = false;
+                        // else if (attackInput.GetKeyUp())
+                        // {
+                        //     _human.Weapon.SetInput(true);
+                        // }
+                        // else
+                        //     _human.Weapon.SetInput(false);
+                        // _human._gunArmAim = attackInput.GetKey() || _human.Weapon.IsActive;
+                    }
+                    // else
+                        // _human.Weapon.ReadInput(attackInputRight);
                 }
             }
             else
@@ -320,8 +320,8 @@ namespace Controllers
                     // Makes AHSSTwinShot activate on key up instead of key down
                     if (_human.Special is AHSSTwinShot)
                         _human.Special.SetInput(specialInput.GetKeyUp());
-                    else
-                    _human.Special.ReadInput(specialInput);
+                    // else
+                    //     _human.Special.ReadInput(specialInput);
                 }
                 else
                     _human.Special.SetInput(false);
@@ -332,12 +332,12 @@ namespace Controllers
             {
                 if (_human.CanJump())
                 {
-                    if (_humanInput.Jump.GetKeyDown())
+                    if (VRHumanInput.Jump.GetKeyDown())
                         _human.Jump();
                     else if (_humanInput.HorseMount.GetKeyDown() && _human.Horse != null && _human.MountState == HumanMountState.None &&
                     Vector3.Distance(_human.Horse.Cache.Transform.position, _human.Cache.Transform.position) < 15f && !_human.HasDirection)
                         _human.MountHorse();
-                    else if (_humanInput.Dodge.GetKeyDown())
+                    else if (VRHumanInput.Dodge.GetKeyDown())
                     {
                         if (_human.HasDirection)
                             _human.Dodge(_human.TargetAngle + 180f);
@@ -352,15 +352,15 @@ namespace Controllers
                 }
                 if (_human.CarryState == HumanCarryState.Carry)
                 {
-                    if (_humanInput.HorseMount.GetKeyDown())
+                    if (VRHumanInput.HorseMount.GetKeyDown())
                         _human.Cache.PhotonView.RPC(nameof(_human.UncarryRPC), RpcTarget.All, new object[0]);
                 }
             }
             else if (_human.MountState == HumanMountState.Horse)
             {
-                if (_humanInput.HorseMount.GetKeyDown() && _human.State == HumanState.Idle)
+                if (VRHumanInput.HorseMount.GetKeyDown() && _human.State == HumanState.Idle)
                     _human.Unmount(false);
-                else if (_humanInput.HorseJump.GetKeyDown())
+                else if (VRHumanInput.HorseMount.GetKeyDown())
                     _human.Horse.Jump();
 
                 if (_human.State == HumanState.Idle && _human.IsAttackableState)
@@ -431,9 +431,19 @@ namespace Controllers
                 && _human.State != HumanState.Stun && _human.State != HumanState.EmoteAction && _human.State != HumanState.SpecialAction
                 && !inMenu && !_human.Dead)
             {
+                Vector2 movement = VRGeneralInput.GetMovementJoystick();
+                Vector2 camera = VRGeneralInput.GetCameraJoystick();
+
+                if (VRHumanInput.Dash.GetKeyDown() && movement.magnitude > 0.1)
+                    _human.Dash(GetTargetAngle(movement.y, movement.x));
+                if (camera.y / camera.x < 1f)
+                    VR.Controller.transform.Rotate(Vector3.up, camera.x);
+
+                /*
                 HumanDashDirection currentDirection = HumanDashDirection.None;
                 if (_humanInput.Dash.GetKeyDown())
                 {
+
                     foreach (HumanDashDirection direction in _dashKeys.Keys)
                     {
                         if (_dashKeys[direction].GetKey())
@@ -487,6 +497,7 @@ namespace Controllers
                 }
                 if (currentDirection != HumanDashDirection.None)
                     _human.Dash(GetDashAngle(currentDirection));
+                */
             }
         }
 

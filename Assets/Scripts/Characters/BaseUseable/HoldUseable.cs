@@ -39,9 +39,9 @@ namespace Characters
             }
         }
 
-        public override void ReadInput(KeybindSetting keybind)
-        {
-            SetInput(keybind.GetKey());
-        }
+        // public override void ReadInput(VRInput keybind)
+        // {
+        //     SetInput(keybind.GetKey());
+        // }
     }
 }

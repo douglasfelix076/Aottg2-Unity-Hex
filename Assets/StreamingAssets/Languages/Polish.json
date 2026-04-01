@@ -198,6 +198,7 @@
 		"Top.SkinsButton": "Skórki",
 		"Top.GameButton": "Gra",
 		"Top.AbilityButton": "Umiejętność",
+		"Top.VRButton": "VR",
 		"KeybindPopup.Title": "Wprowadź nowy klawisz",
 		"KeybindPopup.Unbind": "Wyczyść klawisz",
 		"KeybindPopup.CurrentKey": "Obecny klawisz",
@@ -485,6 +486,8 @@
 		"Ability.BombRange": "Zasięg bomby",
 		"Ability.BombSpeed": "Prędkość bomby",
 		"Ability.BombCooldown": "Czas przeładowania bomby",
+		"VR.Height": "Height",
+		"VR.SeatedMode": "Seated Mode",
 		"Ability.SwapAttackSpecial": "Zamień atak normalny/specjalny",
 		"Ability.SwapAttackSpecialTooltip": "Zamień klawisze normalnego ataku i specjalnego ataku podczas PVP Włóczniami Piorunów."
 	},

@@ -206,6 +206,7 @@
 		"Top.SkinsButton": "Skins",
 		"Top.GameButton": "Jogo",
 		"Top.AbilityButton": "Habilidades",
+		"Top.VRButton": "VR",
 		"KeybindPopup.Title": "Escolha um novo atalho",
 		"KeybindPopup.Unbind": "Desvincular",
 		"Keybinds.General.Autorun": "Execução automática",
@@ -510,6 +511,8 @@
 		"Ability.BombSpeed": "Velocidade da bomba",
 		"Ability.CursorCooldown": "Carregamento na mira",
 		"Ability.BombCooldown": "Tempo de recarga da bomba",
+		"VR.Height": "Height",
+		"VR.SeatedMode": "Seated Mode",
 		"Ability.SwapAttackSpecial": "Trocar ataque/especial",
 		"Ability.SwapAttackSpecialTooltip": "Trocar as teclas de ataque e tecla de especial enquanto estiver no PVP de Thunderspear."
 	},

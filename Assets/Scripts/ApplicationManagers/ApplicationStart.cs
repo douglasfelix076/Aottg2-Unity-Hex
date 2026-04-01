@@ -69,6 +69,9 @@ namespace ApplicationManagers
             MusicManager.Init();
             VoiceChatManager.Init();
             CustomSerialization.Init();
+            FirstUpdate.Init();
+            VR.Init();
+            VRInput.Init();
 
             // debug
             DebugConsole.Init();

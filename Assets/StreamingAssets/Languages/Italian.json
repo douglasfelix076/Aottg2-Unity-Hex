@@ -198,6 +198,7 @@
 		"Top.SkinsButton": "Skins",
 		"Top.GameButton": "Gioco",
 		"Top.AbilityButton": "Abilità",
+		"Top.VRButton": "VR",
 		"KeybindPopup.Title": "Inserisci nuova mappatura per il tasto",
 		"KeybindPopup.Unbind": "Disassocia",
 		"KeybindPopup.CurrentKey": "Tasto attuale",
@@ -474,6 +475,8 @@
 		"Ability.BombRange": "Portata bomba",
 		"Ability.BombSpeed": "Velocità bomba",
 		"Ability.BombCooldown": "Cooldown bomba",
+		"VR.Height": "Height",
+		"VR.SeatedMode": "Seated Mode",
 		"Ability.SwapAttackSpecial": "Scambia attacco normale/speciale",
 		"Ability.SwapAttackSpecialTooltip": "Scambia tasti per l'attacco normale e speciale nel PvP con le lance fulmine."
 	},

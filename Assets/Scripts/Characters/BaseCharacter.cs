@@ -48,6 +48,7 @@ namespace Characters
 
         // setup
         public BaseComponentCache Cache;
+        public VRCache VRCache;
         public bool AI;
         public int MaxHealth;
         public int CurrentHealth;
@@ -76,6 +77,7 @@ namespace Characters
         // Visuals
         protected Outline OutlineComponent = null;
         public event Action<ExitGames.Client.Photon.Hashtable> OnPlayerPropertiesChanged;
+
 
         public override void OnPlayerPropertiesUpdate(Player targetPlayer, ExitGames.Client.Photon.Hashtable changedProps)
         {
@@ -228,6 +230,15 @@ namespace Characters
             if (cache == null)
                 Cache = new BaseComponentCache(gameObject);
         }
+
+        protected void CreateVRCache()
+        {
+            VRCache = new VRCache();
+
+            ConfigureVRCache(VRCache);
+        }
+
+        protected virtual void ConfigureVRCache(VRCache cache) { }
 
         protected virtual void CreateDetection()
         {
@@ -717,6 +728,7 @@ namespace Characters
             OutlineComponent = gameObject.AddComponent<Outline>();
             OutlineComponent.enabled = false;
             Animation = new AnimationHandler(gameObject);
+            CreateVRCache();
             if (!IsMine())
                 SetKinematic(true);
         }
@@ -918,7 +930,7 @@ namespace Characters
             return new List<Renderer>();
         }
 
-        protected void AddRendererIfExists(List<Renderer> renderers, GameObject go, bool multiple = false)
+        protected void AddRendererIfExists(List<Renderer> renderers, GameObject go, bool multiple=false)
         {
             if (go != null)
             {

@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using UnityEngine;
 using Settings;
 using System.Collections.Generic;
+using UnityEngine.XR.Interaction.Toolkit.UI;
 
 namespace UI
 {
@@ -23,6 +24,8 @@ namespace UI
             SetupTitle(title, style.FontSize, style.TitleWidth);
             SetupTooltip(tooltip, style);
             SyncElement();
+            if (gameObject.GetComponent<TrackedDeviceGraphicRaycaster>() != null)
+                gameObject.AddComponent<TrackedDeviceGraphicRaycaster>();
         }
 
         protected void SetupTooltip(string tooltip, ElementStyle style)

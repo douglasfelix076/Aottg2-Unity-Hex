@@ -18,6 +18,7 @@ using UI;
 using UnityEngine;
 using Utility;
 using Weather;
+using UnityEngine.InputSystem.XR;
 
 namespace Characters
 {
@@ -213,6 +214,47 @@ namespace Characters
             ray.origin = ray.GetPoint(Vector3.Distance(ray.origin, HumanCache.Head.transform.position));
 
             return ray;
+        }
+
+        public Ray GetAimRayAfterHumanCheapVR(bool left)
+        {
+            Vector3 start;
+            Vector3 direction;
+
+            if (left)
+            {
+                start = HumanCache.HookLeftAnchorDefault.position;
+                direction = VR.Controller.LeftHand.forward;
+            }
+            else
+            {
+                start = HumanCache.HookRightAnchorDefault.position;
+                direction = VR.Controller.RightHand.forward;
+            }
+
+            Ray ray = new Ray(start, direction);// SceneLoader.CurrentCamera.Camera.ScreenPointToRay(CursorManager.GetInGameMousePosition());
+            // Move the ray origin along its direction by the distance between the ray origin and the character
+            ray.origin = ray.GetPoint(Vector3.Distance(ray.origin, HumanCache.Head.transform.position));
+
+            return ray;
+        }
+
+        public Vector3 GetAimPointVRLeft()
+        {
+            Ray ray = GetAimRayAfterHumanCheapVR(true);
+            Vector3 target = ray.origin + ray.direction * 1000f;
+            if (Physics.Raycast(ray, out RaycastHit hit, 1000f, AimMask.value))
+                target = hit.point;
+            return target;
+        }
+
+        public Vector3 GetAimPointVRRight()
+        {
+            Ray ray = GetAimRayAfterHumanCheapVR(false);
+            Vector3 target = ray.origin + ray.direction * 1000f;
+            if (Physics.Raycast(ray, out RaycastHit hit, 1000f, AimMask.value))
+                target = hit.point;
+            return target;
         }
 
         public override Vector3 GetAimPoint()
@@ -967,6 +1009,18 @@ namespace Characters
             base.CreateCache(HumanCache);
         }
 
+        protected override void ConfigureVRCache(VRCache cache)
+        {
+            base.ConfigureVRCache(cache);
+
+            cache.Scale = 0.65f;
+            cache.Height = 0.5f;
+            cache.HandL = HumanCache.HandL;
+            cache.HandR = HumanCache.HandR;
+            // cache.FootL = HumanCache.FootL;
+            // cache.FootR = HumanCache.FootR;
+        }
+
         protected override IEnumerator WaitAndDie()
         {
             DisableAllCustomParticleEffects();
@@ -1357,35 +1411,20 @@ namespace Characters
                             }
                             Cache.Transform.rotation = Quaternion.Lerp(Cache.Transform.rotation, Quaternion.LookRotation(direction), Time.deltaTime * 10.0f);
                         }
-                        if (!bladeWeapon.IsActive)
-                            _attackButtonRelease = true;
-                        if (!_attackRelease)
-                        {
-                            if (_attackButtonRelease)
-                            {
-                                ContinueAnimation();
-                                _attackRelease = true;
-                            }
-                            else if (Animation.GetNormalizedTime(AttackAnimation) >= 0.32f)
-                                PauseAnimation();
-                        }
-                        float startTime;
-                        float endTime;
-                        if (bladeWeapon.CurrentDurability <= 0f)
-                            startTime = endTime = -1f;
-                        else if (AttackAnimation == HumanAnimations.Attack4)
-                        {
-                            startTime = 0.6f;
-                            endTime = 0.9f;
-                        }
-                        else
-                        {
-                            startTime = 0.5f;
-                            endTime = 0.85f;
-                        }
-                        bool hold = SettingsManager.GraphicsSettings.WeaponTrailHold.Value;
-                        float currTime = Animation.GetNormalizedTime(AttackAnimation);
-                        if (currTime > startTime && currTime < endTime)
+                        // if (!bladeWeapon.IsActive)
+                        //     _attackButtonRelease = true;
+                        // if (!_attackRelease)
+                        // {
+                        //     if (_attackButtonRelease)
+                        //     {
+                        //         ContinueAnimation();
+                        //         _attackRelease = true;
+                        //     }
+                        //     else if (Animation.GetNormalizedTime(AttackAnimation) >= 0.32f)
+                        //         PauseAnimation();
+                        // }
+
+                        if (bladeWeapon.CurrentDurability > 0f)
                         {
                             if (!HumanCache.BladeHitLeft.IsActive())
                             {
@@ -1397,8 +1436,7 @@ namespace Characters
                                     int random = UnityEngine.Random.Range(1, 5);
                                     PlaySound("BladeSwing" + random.ToString());
                                 }
-                                if (!hold)
-                                    ToggleBladeTrails(true);
+                                ToggleBladeTrails(true);
                             }
                             if (!HumanCache.BladeHitRight.IsActive())
                                 HumanCache.BladeHitRight.Activate();
@@ -1407,16 +1445,15 @@ namespace Characters
                         {
                             HumanCache.BladeHitLeft.Deactivate();
                             HumanCache.BladeHitRight.Deactivate();
-                            if (!hold)
-                                ToggleBladeTrails(false);
+                            ToggleBladeTrails(false);
                         }
-                        if (hold)
-                        {
-                            if (currTime > 0f && currTime < endTime)
-                                ToggleBladeTrails(true);
-                            else
-                                ToggleBladeTrails(false);
-                        }
+                        // if (hold)
+                        // {
+                        //     if (currTime > 0f && currTime < endTime)
+                        //         ToggleBladeTrails(true);
+                        //     else
+                        //         ToggleBladeTrails(false);
+                        // }
                         if (Animation.GetNormalizedTime(AttackAnimation) >= 1f)
                             Idle();
                     }
@@ -1578,7 +1615,7 @@ namespace Characters
                 }
                 if (MountState == HumanMountState.None)
                 {
-                    Cache.Transform.rotation = Quaternion.Lerp(Cache.Transform.rotation, _targetRotation, Time.deltaTime * rotationSpeed);
+                    Quaternion.Euler(0f, VR.Controller.Head.rotation.eulerAngles.y, 0f);
                 }
                 bool pivotLeft = FixedUpdateLaunch(true);
                 bool pivotRight = FixedUpdateLaunch(false);
@@ -1679,7 +1716,7 @@ namespace Characters
                         _currentVelocity += force;
                         Cache.Rigidbody.velocity = _currentVelocity;
                     }
-                    Cache.Rigidbody.rotation = Quaternion.Lerp(Cache.Transform.rotation, Quaternion.Euler(0f, TargetAngle, 0f), Time.deltaTime * 10f);
+                    Quaternion.Euler(0f, VR.Controller.Head.rotation.eulerAngles.y, 0f);
                     ToggleSparks(State == HumanState.Slide);
                 }
                 else
@@ -1798,7 +1835,7 @@ namespace Characters
                             PlayAnimation(HumanAnimations.AirRise);
                         }
                     }
-                    else if (!(State != HumanState.Idle || !IsPressDirectionTowardsHero() || SettingsManager.InputSettings.Human.Jump.GetKey() || SettingsManager.InputSettings.Human.HookLeft.GetKey() || SettingsManager.InputSettings.Human.HookRight.GetKey() || SettingsManager.InputSettings.Human.HookBoth.GetKey() || !IsFrontGrounded() || Animation.IsPlaying(HumanAnimations.WallRun) || Animation.IsPlaying(HumanAnimations.Dodge)))
+                    else if (!(State != HumanState.Idle || !IsPressDirectionTowardsHero() || VRHumanInput.Jump.GetKey() || VRHumanInput.HookLeft.GetKey() || VRHumanInput.HookRight.GetKey() || !IsFrontGrounded() || Animation.IsPlaying(HumanAnimations.WallRun) || Animation.IsPlaying(HumanAnimations.Dodge)))
                     {
                         CrossFade(HumanAnimations.WallRun, 0.1f);
                         _wallRunTime = 0f;
@@ -1830,7 +1867,7 @@ namespace Characters
                         }
                         else
                             _targetRotation = GetTargetRotation();
-                        bool isUsingGas = SettingsManager.InputSettings.Human.Jump.GetKey() ^ SettingsManager.InputSettings.Human.AutoUseGas.Value;
+                        bool isUsingGas = VRHumanInput.Gas.GetKey() ^ SettingsManager.InputSettings.Human.AutoUseGas.Value;
                         if (((!pivotLeft && !pivotRight) && (MountState == HumanMountState.None && isUsingGas)) && (Stats.CurrentGas > 0f))
                         {
                             if (HasDirection)
@@ -2355,7 +2392,7 @@ namespace Characters
                     Vector3 v = (hook.GetHookPosition() - Cache.Transform.position).normalized * 10f;
                     if (!(_launchLeft && _launchRight))
                         v *= 2f;
-                    if ((Vector3.Angle(Cache.Rigidbody.velocity, v) > 90f) && (SettingsManager.InputSettings.Human.Jump.GetKey() ^ SettingsManager.InputSettings.Human.AutoUseGas.Value))
+                    if ((Vector3.Angle(Cache.Rigidbody.velocity, v) > 90f) && (VRHumanInput.Jump.GetKey() ^ SettingsManager.InputSettings.Human.AutoUseGas.Value))
                     {
                         pivot = true;
                     }

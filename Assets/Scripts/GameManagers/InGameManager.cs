@@ -27,7 +27,7 @@ namespace GameManagers
         private static readonly List<string> BlueSpawnTags = new List<string> { MapTags.HumanSpawnPointBlue, MapTags.HumanSpawnPoint, MapTags.HumanSpawnPointRed };
         private static readonly List<string> RedSpawnTags = new List<string> { MapTags.HumanSpawnPointRed, MapTags.HumanSpawnPoint, MapTags.HumanSpawnPointBlue };
         private static readonly List<string> HumanSpawnTags = new List<string> { MapTags.HumanSpawnPoint, MapTags.HumanSpawnPointBlue, MapTags.HumanSpawnPointRed };
-        
+
         private SkyboxCustomSkinLoader _skyboxCustomSkinLoader;
         //private ForestCustomSkinLoader _forestCustomSkinLoader;
         //private CityCustomSkinLoader _cityCustomSkinLoader;
@@ -251,10 +251,10 @@ namespace GameManagers
             ResetPlayerInfo();
             ResetPersistentPlayerProperties();
             _needSendPlayerInfo = true;
-            
+
             // Add this line to sync PM state
             ChatManager.SyncPMPartnersOnJoin();
-            
+
             if (PhotonNetwork.OfflineMode)
                 ChatManager.AddLine("Welcome to single player. \nType /help for a list of commands.", ChatTextColor.System);
             else
@@ -645,7 +645,7 @@ namespace GameManagers
             PhotonNetwork.LocalPlayer.SetCustomProperty(PlayerProperty.CharacterViewId, CurrentCharacter.Cache.PhotonView.ViewID);
             UpdateRoundPlayerProperties();
         }
-        
+
         private (Vector3, Quaternion) GetHumanSpawnPoint()
         {
             var tags = HumanSpawnTags;
@@ -717,7 +717,7 @@ namespace GameManagers
                 yield return new WaitForEndOfFrame();
             }
         }
-        
+
         /// <returns><paramref name="count"/> number of positions, from the list of spawn points, or Vector3.zero if no spawn points were found.</returns>
         private IEnumerable<(Vector3 position, Quaternion rotation)> GetTitanSpawnPositions(int count)
         {
@@ -734,7 +734,7 @@ namespace GameManagers
         public BasicTitan SpawnAITitanAt(string type, Vector3 position, float rotationY)
         {
             var rotation = Quaternion.Euler(0f, rotationY, 0f);
-            
+
             if (type == "Default")
             {
                 var settings = SettingsManager.InGameCurrent.Titan;
@@ -831,7 +831,7 @@ namespace GameManagers
         public BaseShifter SpawnAIShifterAt(string type, Vector3 position, float rotationY)
         {
             var rotation = Quaternion.Euler(0f, rotationY, 0f);
-            
+
             string prefab = "";
             if (type == ShifterType.Annie)
                 prefab = CharacterPrefabs.AnnieShifter;
@@ -966,7 +966,7 @@ namespace GameManagers
                 status = PlayerStatus.Alive;
             else
                 status = PlayerStatus.Dead;
-           
+
             var properties = new Dictionary<string, object>
             {
                 { PlayerProperty.Status, status },
@@ -1091,7 +1091,7 @@ namespace GameManagers
         {
             if (ChatManager.IsChatActive())
                 return;
-            if (_generalInputSettings.Pause.GetKeyDown())
+            if (_generalInputSettings.Pause.GetKeyDown() || VRGeneralInput.Pause.GetKeyDown())
                 _inGameMenu.SetPauseMenu(true);
             if (_generalInputSettings.ChangeCharacter.GetKeyDown() && !InGameMenu.InMenu() && !CustomLogicManager.Cutscene && !Restarting && IsFinishedLoading())
             {

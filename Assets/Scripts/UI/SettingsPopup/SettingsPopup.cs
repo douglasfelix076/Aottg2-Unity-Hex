@@ -34,7 +34,7 @@ namespace UI
         protected override void SetupTopButtons()
         {
             ElementStyle style = new ElementStyle(fontSize: 28, themePanel: ThemePanel);
-            foreach (string buttonName in new string[] { "General", "Sound", "Graphics", "UI", "Keybinds", "Skins", "Ability" })
+            foreach (string buttonName in new string[] { "General", "Sound", "Graphics", "UI", "Keybinds", "Skins", "Ability", "VR" })
             {
                 GameObject obj = ElementFactory.CreateCategoryButton(TopBar, style, UIManager.GetLocale(LocaleCategory, "Top", buttonName + "Button"),
                     onClick: () => SetCategoryPanel(buttonName));
@@ -49,9 +49,10 @@ namespace UI
             _categoryPanelTypes.Add("Sound", typeof(SettingsSoundPanel));
             _categoryPanelTypes.Add("Graphics", typeof(SettingsGraphicsPanel));
             _categoryPanelTypes.Add("UI", typeof(SettingsUIPanel));
-            _categoryPanelTypes.Add("Keybinds", typeof(SettingsKeybindsPanel));
+            // _categoryPanelTypes.Add("Keybinds", typeof(SettingsKeybindsPanel));
             _categoryPanelTypes.Add("Skins", typeof(SettingsSkinsPanel));
             _categoryPanelTypes.Add("Ability", typeof(SettingsAbilityPanel));
+            _categoryPanelTypes.Add("VR", typeof(SettingsVRPanel));
         }
 
         private void SetupSettingsList()
@@ -60,9 +61,10 @@ namespace UI
             _saveableSettings.Add(SettingsManager.SoundSettings);
             _saveableSettings.Add(SettingsManager.GraphicsSettings);
             _saveableSettings.Add(SettingsManager.UISettings);
-            _saveableSettings.Add(SettingsManager.InputSettings);
+            // _saveableSettings.Add(SettingsManager.InputSettings);
             _saveableSettings.Add(SettingsManager.CustomSkinSettings);
             _saveableSettings.Add(SettingsManager.AbilitySettings);
+            _saveableSettings.Add(SettingsManager.VRSettings);
             _ignoreDefaultButtonSettings.Add(SettingsManager.CustomSkinSettings);
         }
 
@@ -71,7 +73,7 @@ namespace UI
             ElementStyle style = new ElementStyle(fontSize: ButtonFontSize, themePanel: ThemePanel);
             foreach (string buttonName in new string[] { "Default", "Load", "Save", "Back" })
             {
-                GameObject obj = ElementFactory.CreateTextButton(BottomBar, style, UIManager.GetLocaleCommon(buttonName), 
+                GameObject obj = ElementFactory.CreateTextButton(BottomBar, style, UIManager.GetLocaleCommon(buttonName),
                     onClick: () => OnBottomBarButtonClick(buttonName));
             }
         }
@@ -123,14 +125,14 @@ namespace UI
                     break;
             }
         }
-        
+
         public override void Hide()
         {
             if (gameObject.activeSelf)
             {
                 foreach (SaveableSettingsContainer setting in _saveableSettings)
                     setting.Apply();
-                
+
             }
             base.Hide();
         }

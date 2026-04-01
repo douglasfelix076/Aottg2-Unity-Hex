@@ -198,6 +198,7 @@
 		"Top.SkinsButton": "外觀",
 		"Top.GameButton": "遊戲",
 		"Top.AbilityButton": "爆炸模式設定",
+		"Top.VRButton": "VR",
 		"KeybindPopup.Title": "綁定新按鍵",
 		"KeybindPopup.Unbind": "取消綁定",
 		"KeybindPopup.CurrentKey": "當前鍵位",
@@ -474,6 +475,8 @@
 		"Ability.BombRange": "炸彈射程",
 		"Ability.BombSpeed": "炸彈速度",
 		"Ability.BombCooldown": "炸彈冷卻時間",
+		"VR.Height": "Height",
+		"VR.SeatedMode": "Seated Mode",
 		"Ability.SwapAttackSpecial": "交換普通、特殊攻擊",
 		"Ability.SwapAttackSpecialTooltip": "在雷槍PVP期間交換普通攻擊和特殊攻擊鍵。"
 	},

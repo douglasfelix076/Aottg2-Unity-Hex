@@ -20,10 +20,10 @@ namespace Characters
             return ActiveTime;
         }
 
-        public override void ReadInput(KeybindSetting keybind)
-        {
-            SetInput(keybind.GetKeyDown());
-        }
+        // public override void ReadInput(VRKey keybind)
+        // {
+        //     SetInput(keybind.GetKeyDown());
+        // }
 
         public override void SetInput(bool key)
         {

@@ -222,6 +222,7 @@
 		"Top.SkinsButton": "Skins",
 		"Top.GameButton": "Game",
 		"Top.AbilityButton": "Ability",
+		"Top.VRButton": "VR",
 		"KeybindPopup.Title": "Enter new keybind",
 		"KeybindPopup.Unbind": "Unbind",
 		"KeybindPopup.CurrentKey": "Current key",
@@ -544,6 +545,8 @@
 		"Ability.BombRange": "Bomb Range",
 		"Ability.BombSpeed": "Bomb Speed",
 		"Ability.BombCooldown": "Bomb Cooldown",
+		"VR.Height": "Height",
+		"VR.SeatedMode": "Seated Mode",
 
 		"Ability.SwapAttackSpecial": "Swap attack/special",
 		"Ability.SwapAttackSpecialTooltip": "Swap attack and special keys during thunderspear PVP."

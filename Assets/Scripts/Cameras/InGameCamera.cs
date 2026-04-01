@@ -89,7 +89,7 @@ namespace Cameras
 
         public void ResetCameraMode()
         {
-            CurrentCameraMode = (CameraInputMode)SettingsManager.GeneralSettings.CameraMode.Value;
+            CurrentCameraMode = CameraInputMode.FPS;
         }
 
         public float GetCameraDistance()
@@ -294,6 +294,8 @@ namespace Cameras
 
         private void UpdateMain()
         {
+            return; // TO-DO
+
             if (!ChatManager.IsChatActive() && !InGameMenu.InMenu())
             {
                 if (CustomLogicManager.CameraMode != null)

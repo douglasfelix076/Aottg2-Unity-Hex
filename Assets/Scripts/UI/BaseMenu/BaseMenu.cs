@@ -4,6 +4,10 @@ using System.Collections.Generic;
 using Settings;
 using System.Collections;
 using ApplicationManagers;
+using GameManagers;
+using Unity.Mathematics;
+using UnityEngine.XR.Interaction.Toolkit.UI;
+using ExitGames.Client.Photon.StructWrapping;
 
 namespace UI
 {
@@ -23,10 +27,32 @@ namespace UI
         public KeybindPopup KeybindPopup;
         public SetNamePopup SetNamePopup;
         public SelectListPopup SelectListPopup;
+        public virtual bool VRFollow => true;
 
         public virtual void Setup()
         {
             SetupPopups();
+
+            var canvas = GetComponent<Canvas>();
+            canvas.renderMode = RenderMode.WorldSpace;
+            if (gameObject.GetComponent<TrackedDeviceGraphicRaycaster>() != null)
+                gameObject.AddComponent<TrackedDeviceGraphicRaycaster>();
+
+            // RectTransform rect = GetComponent<RectTransform>();
+            // rect.localScale = Vector3.one * 0.0005f;
+            // rect.sizeDelta = new Vector2(1600,900);
+
+            var scaler = GetComponent<CanvasScaler>();
+            scaler.uiScaleMode = CanvasScaler.ScaleMode.ConstantPixelSize;
+            scaler.scaleFactor = 1;
+            gameObject.transform.localScale = Vector3.one * 0.0003f;
+
+            if (VRFollow)
+            {
+                gameObject.transform.parent = VR.Controller.UIAnchor;
+                gameObject.transform.localPosition = Vector3.zero;
+                gameObject.transform.localRotation = quaternion.identity;
+            }
         }
 
         public void ApplyScale(SceneName sceneName)
@@ -37,7 +63,7 @@ namespace UI
         protected IEnumerator WaitAndApplyScale(SceneName sceneName)
         {
             float scaleFactor = 1f / SettingsManager.UISettings.UIMasterScale.Value;
-            if (sceneName == SceneName.CharacterEditor || sceneName == SceneName.MapEditor 
+            if (sceneName == SceneName.CharacterEditor || sceneName == SceneName.MapEditor
                 || sceneName == SceneName.SnapshotViewer || sceneName == SceneName.Gallery || sceneName == SceneName.Credits)
                 scaleFactor = 1f;
             GetComponent<CanvasScaler>().referenceResolution = new Vector2(1920 * scaleFactor, 1080 * scaleFactor);
@@ -87,5 +113,7 @@ namespace UI
                 popup.Hide();
             }
         }
+
+
     }
 }

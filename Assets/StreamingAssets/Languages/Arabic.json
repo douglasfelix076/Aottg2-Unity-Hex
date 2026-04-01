@@ -198,6 +198,7 @@
 		"Top.SkinsButton": "السكنات",
 		"Top.GameButton": "اللعبة",
 		"Top.AbilityButton": "القدرة",
+		"Top.VRButton": "VR",
 		"KeybindPopup.Title": "إدخال زر جديد",
 		"KeybindPopup.Unbind": "إلغاء الربط",
 		"Keybinds.General.Autorun": "الجري التلقائي",
@@ -474,6 +475,8 @@
 		"Ability.BombSpeed": "سرعة القنبلة",
 		"Ability.CursorCooldown": "مهلة انتظار المؤشر",
 		"Ability.BombCooldown": "مهلة انتظار القنبلة",
+		"VR.Height": "Height",
+		"VR.SeatedMode": "Seated Mode",
 		"Ability.SwapAttackSpecial": "تبديل الهجوم/الهجوم الخاص",
 		"Ability.SwapAttackSpecialTooltip": "تبديل مفاتيح الهجوم والهجوم الخاص أثناء استخدام رمح الرعد في PVP."
 	},
@@ -605,7 +608,7 @@
 		"HitDamage": "أصِب {الضرر} ضرر[ باستخدام {السلاح}]",
 		"DealDamage": "ألحق الضرر[ باستخدام {السلاح}]",
 		"ReachSpeed": "قم بالوصول {السرعة} سرعة"
-	
+
 	},
 	"BasicTutorialMap": {
         "Name.Game": "Aottg 2" ,

@@ -26,6 +26,7 @@ namespace Settings
         public static MapEditorSettings MapEditorSettings;
         public static SoundSettings SoundSettings;
         public static EmoteSettings EmoteSettings;
+        public static VRSettings VRSettings;
 
         public static event Action OnSettingsChanged;
 
@@ -49,6 +50,7 @@ namespace Settings
             MapEditorSettings = new MapEditorSettings();
             SoundSettings = new SoundSettings();
             EmoteSettings = new EmoteSettings();
+            VRSettings = new VRSettings();
         }
 
         public static void NotifySettingsChanged()

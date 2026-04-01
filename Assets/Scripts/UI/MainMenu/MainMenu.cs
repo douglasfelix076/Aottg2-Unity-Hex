@@ -1,11 +1,18 @@
-﻿using ApplicationManagers;
 using Photon.Pun;
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
+using ApplicationManagers;
+using GameManagers;
+using Weather;
 using Settings;
 using SimpleJSONFixed;
 using System.Collections;
-using UnityEngine;
-using UnityEngine.UI;
 using Utility;
+using Cameras;
 
 namespace UI
 {
@@ -47,8 +54,10 @@ namespace UI
 
         private void SetupMainBackground()
         {
-            _backgroundMenu = ElementFactory.CreateMenu<MainBackgroundMenu>("Prefabs/Panels/BackgroundMenu");
-            _backgroundMenu.Setup();
+            var grid = ResourceManager.InstantiateAsset<GameObject>(ResourcePaths.Spawnables, "Grid");
+            grid.transform.position = Vector3.down * 0.5f;
+            Camera.main.gameObject.GetComponent<StaticCamera>().SetSkybox(true);
+
             _tipPanel = ElementFactory.CreateTipPanel(transform, enabled: true);
             _tipPanel.SetRandomTip();
             ElementFactory.SetAnchor(_tipPanel.gameObject, TextAnchor.LowerRight, TextAnchor.LowerRight, new Vector2(10f, -10f));
@@ -168,7 +177,7 @@ namespace UI
 
         private void ChangeMainBackground()
         {
-            _backgroundMenu.ChangeMainBackground();
+            _backgroundMenu?.ChangeMainBackground();
             _tipPanel.SetRandomTip();
         }
 

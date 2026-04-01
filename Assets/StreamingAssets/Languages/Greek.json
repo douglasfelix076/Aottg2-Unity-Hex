@@ -198,6 +198,7 @@
 		"Top.SkinsButton": "Αμφιέσεις",
 		"Top.GameButton": "Παιχνίδι",
 		"Top.AbilityButton": "Εικανότητα",
+		"Top.VRButton": "VR",
 		"KeybindPopup.Title": "Εισάγετε νέο πλήκτρο",
 		"KeybindPopup.Unbind": "Εκκαθάριση",
 		"KeybindPopup.CurrentKey": "Τρέχον πλήκτρο",
@@ -474,6 +475,8 @@
 		"Ability.BombRange": "Εμβέλεια βόμβας",
 		"Ability.BombSpeed": "Ταχύτητα βόμβας",
 		"Ability.BombCooldown": "Χρόνος για την επαναχρησιμοποίηση βόμβας",
+		"VR.Height": "Height",
+		"VR.SeatedMode": "Seated Mode",
 		"Ability.SwapAttackSpecial": "Ανταλλαγή κανονικής/ειδικής επίθεσης",
 		"Ability.SwapAttackSpecialTooltip": "Ανταλλαγή κανονικής και ειδικής επίθεσης στο thunderspear PVP."
 	},

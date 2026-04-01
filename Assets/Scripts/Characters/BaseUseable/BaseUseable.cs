@@ -89,7 +89,7 @@ namespace Characters
         {
         }
 
-        public virtual void ReadInput(KeybindSetting keybind)
+        public virtual void ReadInput(VRKey keybind, bool left)
         {
         }
 

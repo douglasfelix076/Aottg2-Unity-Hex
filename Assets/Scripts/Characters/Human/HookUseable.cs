@@ -119,7 +119,8 @@ namespace Characters
             if (Enabled && _activeHook == null)
             {
                 _activeHook = FindAvailableHook();
-                Vector3 target = ((Human)_owner).GetAimPoint();
+                Human _human = (Human)_owner;
+                Vector3 target = _left ? _human.GetAimPointVRLeft() : _human.GetAimPointVRRight();
                 if (HookBoth)
                 {
                     float distance = Vector3.Distance(SceneLoader.CurrentCamera.Cache.Transform.position, target);

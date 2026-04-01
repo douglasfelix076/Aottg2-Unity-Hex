@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.XR.Interaction.Toolkit.UI;
 
 namespace UI
 {
@@ -34,6 +35,7 @@ namespace UI
             };
             colors = block;
             navigation = new Navigation { mode = Navigation.Mode.None };
+            gameObject.AddComponent<TrackedDeviceGraphicRaycaster>();
         }
 
         protected override void DoStateTransition(SelectionState state, bool instant)

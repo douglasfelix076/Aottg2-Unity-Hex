@@ -198,6 +198,7 @@
 		"Top.SkinsButton": "스킨",
 		"Top.GameButton": "게임",
 		"Top.AbilityButton": "능력",
+		"Top.VRButton": "VR",
 		"KeybindPopup.Title": "키를 입력하세요",
 		"KeybindPopup.Unbind": "키 헤제",
 		"KeybindPopup.CurrentKey": "현재 키",
@@ -485,6 +486,8 @@
 		"Ability.BombRange": "미사일 범위",
 		"Ability.BombSpeed": "미사일 속도",
 		"Ability.BombCooldown": "미사일 쿨타임",
+		"VR.Height": "Height",
+		"VR.SeatedMode": "Seated Mode",
 		"Ability.SwapAttackSpecial": "공격 스타일 교체",
 		"Ability.SwapAttackSpecialTooltip": "뇌창 PVP 중에 공격 키와 특수 키를 교체하세요."
 	},

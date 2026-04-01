@@ -31,6 +31,7 @@ namespace Controllers
 
         protected virtual void Start()
         {
+            SetupVRController();
         }
 
         protected virtual void Update()
@@ -71,20 +72,15 @@ namespace Controllers
                     _character.HasDirection = false;
                 return;
             }
-            int forward = 0;
-            int right = 0;
-            if (_generalInput.Autorun.GetKeyDown())
-                _autorun = !_autorun;
-            if (_generalInput.Forward.GetKey())
-                forward = 1;
-            else if (_generalInput.Back.GetKey())
-                forward = -1;
-            if (_generalInput.Left.GetKey())
-                right = -1;
-            else if (_generalInput.Right.GetKey())
-                right = 1;
+
+            Vector2 movement = VRGeneralInput.GetMovementJoystick();
+            float forward = movement.y;
+            float right = movement.x;
+
             if (forward != 0 || right != 0)
                 _autorun = false;
+            else if (_generalInput.Autorun.GetKeyDown())
+                _autorun = !_autorun;
             if (_autorun)
             {
                 forward = 1;
@@ -107,7 +103,7 @@ namespace Controllers
                 _inGameMenu.ItemHandler.SetItemWheel(false);
                 return;
             }
-            if (_interactionInput.EmoteMenu.GetKeyDown())
+            if (VRGeneralInput.Emote.GetKeyDown())
                 _inGameMenu.EmoteHandler.ToggleEmoteWheel();
             if (_interactionInput.ItemMenu.GetKeyDown())
                 _inGameMenu.ItemHandler.ToggleItemWheel();
@@ -119,7 +115,7 @@ namespace Controllers
         {
         }
 
-        protected float GetTargetAngle(int forward, int right)
+        protected float GetTargetAngle(float forward, float right)
         {
             return SceneLoader.CurrentCamera.Cache.Transform.rotation.eulerAngles.y + 90f - Mathf.Atan2(forward, right) * Mathf.Rad2Deg;
         }
@@ -141,5 +137,7 @@ namespace Controllers
             direction = new Vector3(direction.x, 0f, direction.z).normalized;
             return Quaternion.LookRotation(direction, Vector3.up).eulerAngles.y;
         }
+
+        protected void SetupVRController() => VR.Controller.SetupCharacter(transform);
     }
 }

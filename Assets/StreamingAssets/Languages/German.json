@@ -144,7 +144,7 @@
     "Misc.AllowBlades": "Erlaube Klingen",
     "Misc.AllowAHSS": "Erlaube AHSS",
     "Misc.AllowAPG": "Erlaube APG",
-    "Misc.AllowStock": "Erlaube stocking", 
+    "Misc.AllowStock": "Erlaube stocking",
     "Misc.AllowThunderspears": "Erlaube Donnerspeere",
     "Misc.AllowPlayerTitans": "Erlaube Spielertitanen",
     "Misc.AllowShifters": "Erlaube Titanenwandler",
@@ -164,7 +164,7 @@
     "Misc.CustomStats": "Benutzerdef. Werte",
     "Misc.CustomStatsTooltip": "Falls ausgeschaltet, verwenden alle Characktere Levis Werte",
     "Misc.RealismMode": "Realistischer Modus",
-    "Misc.RealismModeTooltip": "Verändert Physics und Benutzeroberfläche um das Spiel realistischer zu machen. Dies schließt ein: Tot durch Kollision, reel-out-Limit und das Auschalten von Minimap und Namen.",  
+    "Misc.RealismModeTooltip": "Verändert Physics und Benutzeroberfläche um das Spiel realistischer zu machen. Dies schließt ein: Tot durch Kollision, reel-out-Limit und das Auschalten von Minimap und Namen.",
     "Misc.ShifterHealth": "Titanenwandler Gesundheit",
     "Misc.ProximityMaxDistance": "Umfeld Sprach Chat Maximum",
     "Misc.ProximityMinDistance": "Umfeld Sprach Chat Minimum",
@@ -397,7 +397,7 @@
     "Keybinds.Interaction.QuickSelect9": "Schnellauswahl 9",
     "Keybinds.Interaction.Function1": "Funktion 1",
     "Keybinds.Interaction.Function2": "Funktion 2",
-    "Keybinds.Interaction.Function3": "Funktion 3",    
+    "Keybinds.Interaction.Function3": "Funktion 3",
     "Keybinds.Interaction.Function4": "Funktion 4",
     "Keybinds.Interaction.Interact2": "Interagieren2",
     "Keybinds.Interaction.Interact3": "Interagieren3",
@@ -449,6 +449,8 @@
     "Ability.BombRange": "Bombenreichweite",
     "Ability.BombSpeed": "Bombengeschwindigkeit",
     "Ability.BombCooldown": "Bombenabklingzeit",
+		"VR.Height": "Height",
+		"VR.SeatedMode": "Seated Mode",
     "Ability.SwapAttackSpecial": "Angriff/Fähigkeit tauschen",
     "Ability.SwapAttackSpecialTooltip": "Tausche die Tasten für 'Normaler Angriff' und 'Fähigkeit nutzen' im Donnerspeer PvP.",
     "Ability.CursorCooldown": "Mauszeiger Abklingzeit",
@@ -666,5 +668,5 @@
       "WallRun.Instruction": "Laufe zur anderen Seite der Wand",
       "WallRun.Text": "Du kannst an der Wand laufen, indem du an die Wand springst und {0} gedrückt hältst"
   }
-  
+
 }

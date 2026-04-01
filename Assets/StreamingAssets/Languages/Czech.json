@@ -188,6 +188,7 @@
 		"Top.SkinsButton": "Skiny",
 		"Top.GameButton": "Hra",
 		"Top.AbilityButton": "Schpnost",
+		"Top.VRButton": "VR",
 		"KeybindPopup.Title": "Zadat novou klávesu",
 		"KeybindPopup.Unbind": "Odstranit klávesu",
 		"KeybindPopup.CurrentKey": "Aktuální klávesa",
@@ -457,6 +458,8 @@
 		"Ability.BombRange": "Dosah bomb",
 		"Ability.BombSpeed": "Rychlost bomb",
 		"Ability.BombCooldown": "Čas mezi bombami",
+		"VR.Height": "Height",
+		"VR.SeatedMode": "Seated Mode",
 		"Ability.SwapAttackSpecial": "Vyměnit útok a speciální útok",
 		"Ability.SwapAttackSpecialTooltip": "Vymění útok a speciální útok při PvP s hromokopím."
 	},

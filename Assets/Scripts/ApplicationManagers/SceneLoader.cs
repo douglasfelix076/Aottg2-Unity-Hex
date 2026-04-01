@@ -13,6 +13,8 @@ using Settings;
 using CustomSkins;
 using Photon.Pun;
 using UnityEngine.SceneManagement;
+using UnityStandardAssets.ImageEffects;
+using UnityEngine.InputSystem.XR;
 
 namespace ApplicationManagers
 {
@@ -89,6 +91,7 @@ namespace ApplicationManagers
             {
                 CurrentCamera = go.AddComponent<StaticCamera>();
                 CurrentCamera.Camera.nearClipPlane = 0.3f;
+
                 if (SceneName == SceneName.SnapshotViewer)
                     CurrentCamera.GetComponent<StaticCamera>().SetSkybox(true);
                 else
@@ -96,10 +99,23 @@ namespace ApplicationManagers
             }
         }
 
+        private static void CreateVrController()
+        {
+            TrackedPoseDriver trackedPoseDriver = CurrentCamera.Camera.transform.GetComponent<TrackedPoseDriver>();
+            trackedPoseDriver.enabled = true;
+
+            VR.CreateVRController();
+            VR.Controller.transform.position = new Vector3(0, 0, -1);
+            CurrentCamera.Camera.transform.parent = VR.Controller.CameraOffset.transform;
+            CurrentCamera.Camera.nearClipPlane = 0.01f;
+            CurrentCamera.GetComponent<Antialiasing>().enabled = false;
+        }
+
         private void OnSceneWasLoaded(Scene scene, LoadSceneMode mode)
         {
             CreateGameManager();
             CreateCamera();
+            CreateVrController();
             EventManager.InvokeLoadScene(SceneName);
         }
     }

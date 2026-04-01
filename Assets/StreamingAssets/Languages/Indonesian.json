@@ -222,6 +222,7 @@
 		"Top.SkinsButton": "Skin",
 		"Top.GameButton": "Permainan",
 		"Top.AbilityButton": "Keahlian",
+		"Top.VRButton": "VR",
 		"KeybindPopup.Title": "Tekan tombol baru",
 		"KeybindPopup.Unbind": "Lepas pengaturan tombol",
 		"Keybinds.General.Autorun": "Otomatis Berlari",
@@ -602,6 +603,8 @@
 		"Ability.BombRange": "Jangkauan bom",
 		"Ability.BombSpeed": "Kecepatan bom",
 		"Ability.BombCooldown": "Waktu tunggu bom",
+		"VR.Height": "Height",
+		"VR.SeatedMode": "Seated Mode",
 		"Ability.SwapAttackSpecial": "Tukar serangan/spesial",
 		"Ability.SwapAttackSpecialTooltip": "Tukar serangan dan spesial selama PVP tombak petir."
 	},
